@@ -3,7 +3,13 @@ import wave
 import pyaudio
 
 def printWaveInfo(wf):
-    print "チャネル数:", wf.getnchannels()
+    """WAVEファイルの情報を取得"""
+    print "チャンネル数:", wf.getnchannels()
+    print "サンプル幅:", wf.getsampwidth()
+    print "サンプリング周波数:", wf.getframerate()
+    print "フレーム数:", wf.getnframes()
+    print "パラメータ:", wf.getparams()
+    print "長さ（秒）:", float(wf.getnframes()) / wf.getframerate()
 
 if __name__ ==  '__main__':
     wf = wave.open("output.wav", "r")
