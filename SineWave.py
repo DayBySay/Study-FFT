@@ -1,7 +1,8 @@
 import struct
+import wave
 from pylab import *
 
-def createSinWave(A, f0, fs, length):
+def createSineWave(A, f0, fs, length):
     data =[]
     for n in arange(length * fs):
         s = A * np.sin(2 * np.pi * f0 * n / fs)
@@ -31,7 +32,21 @@ def play (data, fs, bit):
     stream.close()
     p.terminate()
 
-freqList = [262, 294, 330, 349, 392, 440, 494, 523]
-for f in freqList:
-    data = createSinWave(1.0, f, 8000.0, 1.0)
-    play(data, 8000, 16)
+# freqList = [262, 294, 330, 349, 392, 440, 494, 523]
+# for f in freqList:
+#     data = createSineWave(1.0, f, 8000.0, 1.0)
+#     play(data, 8000, 16)
+
+if __name__ == "__main__" :
+    allData = ""
+    freqList = [262, 294, 330, 349, 392, 440, 494, 523] 
+    for f in freqList:
+        data = createSineWave(1.0, f, 8000.0, 1.0)
+        play(data, 8000, 16)
+        allData += data
+    wf = wave.open("output.wav", "r")
+    wf.setnchannels(1)
+    wf.setsampwidth(16 / 8)
+    wf.setframerate(8000)
+    wf.writeframes(allData)
+    wf.close()
